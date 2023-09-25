@@ -1,0 +1,13 @@
+sais/ (Main Project Directory)
+   ├── app.py                      # Main application entry point
+   ├── templates/                  # HTML templates for the web interface
+   ├── static/                     # Static files (CSS, JavaScript, etc.) for the web interface
+   ├── sais/                       # S.A.I.S. System Directory
+   │   ├── __init__.py             # Initialize the S.A.I.S. system
+   │   ├── voice.py                # Handle speech recognition and text-to-speech
+   │   ├── commands.py             # Define and handle user commands
+   │   ├── database.py             # Manage database interactions
+   ├── database/                   # Directory to store database files
+   ├── config.py                   # Configuration settings
+   ├── requirements.txt            # List of project dependencies
+   ├── README.md                   # Project documentation
