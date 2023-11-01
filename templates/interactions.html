@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactions</title>
+</head>
+<body>
+    <h1>All Interactions</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User Input</th>
+                <th>Response</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for interaction in interactions %}
+            <tr>
+                <td>{{ interaction[0] }}</td> <!-- Interaction ID -->
+                <td>{{ interaction[1] }}</td> <!-- User Input -->
+                <td>{{ interaction[2] }}</td> <!-- Response -->
+                <td>{{ interaction[3] }}</td> <!-- Created At -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
