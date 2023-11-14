@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Chat with S.A.I.S.</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='chat.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Add these lines in the head section of your HTML file -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-3 mb-3">
+            <div class="col-6">
+                <h1>S.A.I.S. Chat</h1>
+            </div>
+            <div class="col-6 text-right">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="darkModeSwitch">
+                    <label class="custom-control-label" for="darkModeSwitch">Dark Mode</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="chat-container" id="chat-container">
+                    <div id="chat"></div>
+                    <div class="user-input-container">
+                        <input type="text" id="user-input" class="form-control" placeholder="Enter your message">
+                        <button id="send-button" class="btn btn-primary mt-2">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 # Import any necessary libraries or modules here
 
+# Import database functions from database.py
+from saisFunction.database import insert_chat_interaction, get_all_chat_interactions
+
 
 # Define functions to handle different commands
-from saisFunction.database import insert_interaction
-
-
 def greet_user():
     return "Hello! How can I assist you today?"
 
@@ -30,26 +30,30 @@ COMMANDS = {
 }
 
 # Define a function to process user input and return a response
-def process_user_input(user_input, conn):
-    # Split the user input into words or tokens
-    tokens = user_input.split()
+def process_user_input(user_id, user_message, conn):
+    user_input = user_message.strip().lower()  # Normalize user input
+    response = ""
 
-    # Check if the first token (word) is a valid command
-    if tokens[0] in COMMANDS:
-        # Call the corresponding command function
-        response = COMMANDS[tokens[0]]()
+    # Check if the user input is a valid command
+    if user_input in COMMANDS:
+        response = COMMANDS[user_input]()
     else:
         # Handle unrecognized commands or provide a default response
         response = "I'm sorry, I don't understand that command."
 
-    # Insert the interaction into the database
-    insert_interaction(conn, user_input, response)
-    
+    # Insert the chat interaction into the database
+    insert_chat_interaction(conn, user_id, user_message, response)
+
     return response
+
+# Define a function to retrieve all chat interactions from the database
+def get_chat_interactions(conn):
+    return get_all_chat_interactions(conn)
 
 # Main function to test the commands
 if __name__ == "__main__":
+    user_id = 1  # Replace with the actual user ID
     while True:
-        user_input = input("Enter a command: ")
-        response = process_user_input(user_input)
-        print(response)
+        user_message = input("User message: ")
+        response = process_user_input(user_id, user_message)
+        print("S.A.I.S.:", response)

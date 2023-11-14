@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactions</title>
+    <title>All Interactions</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='interactions.css') }}">
 </head>
 <body>
     <h1>All Interactions</h1>
     <table>
         <thead>
             <tr>
+                <th></th>
                 <th>ID</th>
                 <th>User Input</th>
                 <th>Response</th>
@@ -19,13 +20,16 @@
         <tbody>
             {% for interaction in interactions %}
             <tr>
-                <td>{{ interaction[0] }}</td> <!-- Interaction ID -->
-                <td>{{ interaction[1] }}</td> <!-- User Input -->
-                <td>{{ interaction[2] }}</td> <!-- Response -->
-                <td>{{ interaction[3] }}</td> <!-- Created At -->
+                <td><input type="checkbox" data-id="{{ interaction[0] }}"></td>
+                <td>{{ interaction[0] }}</td>
+                <td>{{ interaction[2] }}</td>
+                <td>{{ interaction[3] }}</td>
+                <td>{{ interaction[4] }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <button id="removeButton">Remove Selected</button>
+    <script src="{{ url_for('static', filename='interactions.js') }}"></script>
 </body>
 </html>

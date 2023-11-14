@@ -1,0 +1,61 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+.chat-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    overflow-y: auto;
+    max-height: 300px;
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.user-input {
+    background: #4caf50;
+    color: white;
+}
+
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.chat-container.dark-mode {
+    background-color: #222;
+    color: #fff;
+}
+
+.message.dark-mode {
+    background-color: #444;
+}
+
+.user-input.dark-mode {
+    background: #4caf50;
+    color: white;
+}
+
+.custom-control-label::before {
+    background-color: #007bff;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+    background-color: #0056b3;
+}

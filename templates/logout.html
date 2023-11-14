@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout - S.A.I.S.</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='logout.css') }}">
+</head>
+<body>
+    <div class="logout-container">
+        <h1>Logout</h1>
+        <p>Are you sure you want to logout?</p>
+        <form method="post">
+            <button type="submit" id="logoutButton">Logout</button>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='logout.js') }}"></script>
+</body>
+</html>

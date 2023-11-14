@@ -1,12 +1,23 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for, session
+from flask import Flask, jsonify, render_template, request, redirect, send_from_directory, url_for, session
 from saisFunction.commands import process_user_input
 from saisFunction.database import create_connection, delete_interactions_by_ids, insert_chat_interaction, get_all_chat_interactions, check_user_credentials, create_user, get_user_id_by_username
+import psycopg2
+
 
 app = Flask(__name__, static_url_path='/static')
+
 app.secret_key = 'your_secret_key'  # Change this to a secure secret key
 
 # Create a database connection
 conn = create_connection()
+
+
+# # Function to check if the user is logged in
+# @app.before_request
+# def check_user_login():
+#     if 'username' not in session and request.endpoint not in ['login', 'register']:
+#         return redirect(url_for('login'))
+
 
 # User login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -35,40 +46,31 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html')
 
-# Logout page
+
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    if request.method == 'POST':
-        if 'username' in session:
-            # Clear the session data
-            session.pop('username', None)
-            session.pop('role', None)
-        return redirect(url_for('login'))
-    return render_template('logout.html')
+    if 'username' in session:
+        # Clear the session data
+        session.pop('username', None)
+    return redirect(url_for('login'))
 
-# Home page
+
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     if 'username' in session:
         username = session['username']
+        user_id = get_user_id_by_username(conn, username)  # Fetch user_id based on the username
         if request.method == "POST":
-            if 'logout' in request.form:
-                return redirect(url_for('logout'))
-            if 'startChat' in request.form:
-                return redirect(url_for('chat'))
-            if 'viewInteractions' in request.form:
-                if session.get('role') == 'Admin':
-                    return redirect(url_for('list_interactions'))
-        return render_template("home.html", username=username)
+            user_input = request.form.get("user_input")
+            if user_input:
+                response = process_user_input(user_id, user_input, conn)  # Use the obtained user_id
+                return render_template("result.html", user_input=user_input, response=response)           
+        
+        return render_template("home.html")
     else:
         return redirect(url_for('login'))
 
-# Chat page
-@app.route("/chat")
-def chat():
-    return render_template("chat.html")
-
-# Submit command
 @app.route("/submit_command", methods=["POST"])
 def submit_command():
     if request.method == "POST":
@@ -78,19 +80,14 @@ def submit_command():
         response = process_user_input(user_id, user_input, conn)  # Use the obtained user_id
         return render_template("result.html", user_input=user_input, response=response)
 
-# List interactions page (Only accessible for Admin users)
 @app.route("/interactions", methods=["GET"])
 def list_interactions():
-    if 'username' in session and session.get('role') == 'Admin':
-        interactions = get_all_chat_interactions(conn)
-        return render_template("interactions.html", interactions=interactions)
-    else:
-        return redirect(url_for('home'))
+    interactions = get_all_chat_interactions(conn)
+    return render_template("interactions.html", interactions=interactions)
 
-# Remove interactions (Only accessible for Admin users)
 @app.route("/remove_interactions", methods=["POST"])
 def remove_interactions():
-    if request.method == "POST" and session.get('role') == 'Admin':
+    if request.method == "POST":
         selected_ids = request.get_json().get("selected_ids")
 
         if selected_ids:
@@ -101,7 +98,10 @@ def remove_interactions():
 
     return jsonify({"success": False, "message": "Invalid request"})
 
-# Save message
+@app.route("/chat", methods=["GET"])
+def chat():
+    return render_template("chat.html")
+
 @app.route("/save_message", methods=["POST"])
 def save_message():
     if request.method == "POST":
@@ -118,4 +118,5 @@ def save_message():
         return jsonify({"success": True, "message": response})
 
 if __name__ == '__main__':
+    conn = create_connection()
     app.run(debug=True)

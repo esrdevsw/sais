@@ -1,1 +1,14 @@
 # Directory to store database files
+
+saisdb=# show data_directory;
+           data_directory
+-------------------------------------
+ C:/Program Files/PostgreSQL/16/data
+(1 row)
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL
+);

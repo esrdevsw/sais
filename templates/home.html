@@ -2,30 +2,38 @@
 <html>
 <head>
     <title>S.A.I.S.</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
 </head>
 <body>
+    <div class="banner">
+        S.A.I.S. - Simple Artificial Intelligence System
+    </div>
     
-    <h1>Welcome to S.A.I.S.</h1>
-    <h2>Simple AI System</h2>    
+    <div class="user-section">
+        <span id="username">{{ session['username'] }}</span>
+        <button id="logoutButton">Logout</button>
+    </div>
 
-    <form method="post">
+    <h1>Welcome to S.A.I.S.</h1>
+    <h2>Simple AI System</h2>
+
+    <form method="post" action="{{ url_for('submit_command') }}">
         <label for="user_input">Enter your command:</label>
         <input type="text" id="user_input" name="user_input" required>
         <input type="submit" value="Submit">
     </form>
-
-    <br>
-    <br>
     
-    <!-- Add a button to show all interactions in a new tab -->
-    <button id="viewInteractions">View All Interactions</button>
 
-    <script>
-        // Add a click event listener to the button
-        document.getElementById("viewInteractions").addEventListener("click", function() {
-            // Open a new tab to the /interactions route
-            window.open("/interactions", "_blank");
-        });
-    </script>
+    <br />​<hr />​​​​​​​​​​​​​​​​​​​<br />
+
+    <button id="startChat">Start a Chat</button>
+
+    <br />​<hr />​​​​​​​​​​​​​​​​​​​<br />
+
+    {% if session['role'] == 'Admin' %}
+        <button id="viewInteractions">View All Interactions</button>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='home.js') }}"></script>
 </body>
 </html>

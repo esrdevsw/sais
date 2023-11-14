@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - S.A.I.S.</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+
+    
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login to S.A.I.S.</h1>
+        <form method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" autocomplete="username">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" autocomplete="current-password">
+
+            <input type="submit" value="Login">
+        </form>
+        <p class="error">{{ error }}</p>
+        <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+</body>
+</html>

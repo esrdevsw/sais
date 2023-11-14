@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - S.A.I.S.</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Welcome to S.A.I.S.</h1>
+        <h2>Simple AI System</h2>
+        
+        <form method="post" class="registration-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button id="registerButton" type="submit">Register</button>
+        </form>
+
+        <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>
